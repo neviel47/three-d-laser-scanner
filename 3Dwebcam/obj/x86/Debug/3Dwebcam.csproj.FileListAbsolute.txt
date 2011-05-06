@@ -29,3 +29,19 @@ D:\utils\projects\3D laser scan\3Dwebcam\3Dwebcam\bin\Debug\Emgu.Util.dll
 D:\utils\projects\3D laser scan\3Dwebcam\3Dwebcam\bin\Debug\zlib.net.dll
 D:\utils\projects\3D laser scan\3Dwebcam\3Dwebcam\bin\Debug\ZedGraph.dll
 D:\utils\projects\3D laser scan\3Dwebcam\3Dwebcam\bin\Debug\WebCam_Capture.dll
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\3Dwebcam.exe
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\3Dwebcam.pdb
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\3Dwebcam.exe
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\3Dwebcam.pdb
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\Emgu.CV.dll
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\Emgu.CV.ML.dll
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\Emgu.CV.UI.dll
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\Emgu.Util.dll
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\WebCam_Capture.dll
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\zlib.net.dll
+D:\utils\svn\laser-scanner\3Dwebcam\bin\Debug\ZedGraph.dll
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\_3Dwebcam.Form1.resources
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\_3Dwebcam.Properties.Resources.resources
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\GenerateResource.write.1.tlog

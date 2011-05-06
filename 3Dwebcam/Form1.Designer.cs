@@ -39,6 +39,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.l_contour = new System.Windows.Forms.Label();
             this.imageBox1 = new Emgu.CV.UI.ImageBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.webcamPictureBox = new System.Windows.Forms.PictureBox();
@@ -74,13 +75,15 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.chb_using_nxt = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.chb_laser = new System.Windows.Forms.CheckBox();
             this.chb_webcam = new System.Windows.Forms.CheckBox();
-            this.chb_using_nxt = new System.Windows.Forms.CheckBox();
-            this.l_contour = new System.Windows.Forms.Label();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.chb_webcam_flip = new System.Windows.Forms.CheckBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.webcamImageBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tresholdImageBox)).BeginInit();
@@ -96,9 +99,11 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // webcamImageBox
@@ -200,6 +205,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Contour";
             // 
+            // l_contour
+            // 
+            this.l_contour.Location = new System.Drawing.Point(6, 288);
+            this.l_contour.Name = "l_contour";
+            this.l_contour.Size = new System.Drawing.Size(320, 17);
+            this.l_contour.TabIndex = 24;
+            this.l_contour.Text = "Contour value";
+            this.l_contour.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // imageBox1
             // 
             this.imageBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -263,7 +277,7 @@
             // 
             this.tb_rotate.Location = new System.Drawing.Point(83, 42);
             this.tb_rotate.Name = "tb_rotate";
-            this.tb_rotate.Size = new System.Drawing.Size(100, 20);
+            this.tb_rotate.Size = new System.Drawing.Size(61, 20);
             this.tb_rotate.TabIndex = 27;
             // 
             // button6
@@ -275,7 +289,6 @@
             this.button6.Text = "Rotate";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Visible = false;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // gb_info
             // 
@@ -524,7 +537,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1035, 505);
+            this.tabPage2.Size = new System.Drawing.Size(1035, 476);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Coordinates";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -536,23 +549,10 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(1035, 505);
+            this.tabPage3.Size = new System.Drawing.Size(1035, 476);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Devices";
             this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.checkBox1);
-            this.groupBox6.Controls.Add(this.chb_using_nxt);
-            this.groupBox6.Controls.Add(this.button6);
-            this.groupBox6.Controls.Add(this.tb_rotate);
-            this.groupBox6.Location = new System.Drawing.Point(164, 12);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(196, 71);
-            this.groupBox6.TabIndex = 30;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Rotate";
             // 
             // groupBox5
             // 
@@ -565,11 +565,34 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "DeviceList";
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.checkBox1);
+            this.groupBox6.Controls.Add(this.chb_using_nxt);
+            this.groupBox6.Controls.Add(this.button6);
+            this.groupBox6.Controls.Add(this.tb_rotate);
+            this.groupBox6.Location = new System.Drawing.Point(164, 12);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(154, 71);
+            this.groupBox6.TabIndex = 30;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Rotate";
+            // 
+            // chb_using_nxt
+            // 
+            this.chb_using_nxt.AutoSize = true;
+            this.chb_using_nxt.Location = new System.Drawing.Point(19, 19);
+            this.chb_using_nxt.Name = "chb_using_nxt";
+            this.chb_using_nxt.Size = new System.Drawing.Size(125, 17);
+            this.chb_using_nxt.TabIndex = 2;
+            this.chb_using_nxt.Text = "NXT Rotate On / Off";
+            this.chb_using_nxt.UseVisualStyleBackColor = true;
+            // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.groupBox8);
+            this.panel4.Controls.Add(this.groupBox7);
             this.panel4.Controls.Add(this.groupBox6);
-            this.panel4.Controls.Add(this.chb_laser);
-            this.panel4.Controls.Add(this.chb_webcam);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(0, 0);
             this.panel4.Name = "panel4";
@@ -579,7 +602,7 @@
             // chb_laser
             // 
             this.chb_laser.AutoSize = true;
-            this.chb_laser.Location = new System.Drawing.Point(28, 41);
+            this.chb_laser.Location = new System.Drawing.Point(16, 19);
             this.chb_laser.Name = "chb_laser";
             this.chb_laser.Size = new System.Drawing.Size(94, 17);
             this.chb_laser.TabIndex = 1;
@@ -592,7 +615,7 @@
             this.chb_webcam.AutoSize = true;
             this.chb_webcam.Checked = true;
             this.chb_webcam.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chb_webcam.Location = new System.Drawing.Point(28, 12);
+            this.chb_webcam.Location = new System.Drawing.Point(18, 19);
             this.chb_webcam.Name = "chb_webcam";
             this.chb_webcam.Size = new System.Drawing.Size(112, 17);
             this.chb_webcam.TabIndex = 0;
@@ -600,24 +623,37 @@
             this.chb_webcam.UseVisualStyleBackColor = true;
             this.chb_webcam.CheckedChanged += new System.EventHandler(this.chb_webcam_CheckedChanged);
             // 
-            // chb_using_nxt
+            // groupBox7
             // 
-            this.chb_using_nxt.AutoSize = true;
-            this.chb_using_nxt.Location = new System.Drawing.Point(19, 19);
-            this.chb_using_nxt.Name = "chb_using_nxt";
-            this.chb_using_nxt.Size = new System.Drawing.Size(125, 17);
-            this.chb_using_nxt.TabIndex = 2;
-            this.chb_using_nxt.Text = "NXT Rotate On / Off";
-            this.chb_using_nxt.UseVisualStyleBackColor = true;
+            this.groupBox7.Controls.Add(this.chb_webcam_flip);
+            this.groupBox7.Controls.Add(this.chb_webcam);
+            this.groupBox7.Location = new System.Drawing.Point(12, 12);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(146, 71);
+            this.groupBox7.TabIndex = 31;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Webcam";
             // 
-            // l_contour
+            // chb_webcam_flip
             // 
-            this.l_contour.Location = new System.Drawing.Point(6, 288);
-            this.l_contour.Name = "l_contour";
-            this.l_contour.Size = new System.Drawing.Size(320, 17);
-            this.l_contour.TabIndex = 24;
-            this.l_contour.Text = "Contour value";
-            this.l_contour.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chb_webcam_flip.AutoSize = true;
+            this.chb_webcam_flip.Location = new System.Drawing.Point(18, 42);
+            this.chb_webcam_flip.Name = "chb_webcam_flip";
+            this.chb_webcam_flip.Size = new System.Drawing.Size(80, 17);
+            this.chb_webcam_flip.TabIndex = 1;
+            this.chb_webcam_flip.Text = "Flip Vertical";
+            this.chb_webcam_flip.UseVisualStyleBackColor = true;
+            this.chb_webcam_flip.CheckedChanged += new System.EventHandler(this.chb_webcam_flip_CheckedChanged);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.chb_laser);
+            this.groupBox8.Location = new System.Drawing.Point(324, 12);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(124, 71);
+            this.groupBox8.TabIndex = 32;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Laser";
             // 
             // Form1
             // 
@@ -650,11 +686,14 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -713,6 +752,9 @@
         private System.Windows.Forms.CheckBox chb_webcam;
         private System.Windows.Forms.CheckBox chb_using_nxt;
         private System.Windows.Forms.Label l_contour;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.CheckBox chb_webcam_flip;
     }
 }
 
