@@ -39,8 +39,8 @@ namespace _3Dwebcam
 
         //--------------------------------------------------------------------------
         
-        FilterInfoCollection DeviceList;
-        AForge.Video.DirectShow.VideoCaptureDevice Device;
+        FilterInfoCollection DeviceList;                    // device list
+        AForge.Video.DirectShow.VideoCaptureDevice Device;  // laser device
 
         //--------------------------------------------------------------------------
 
@@ -231,15 +231,13 @@ namespace _3Dwebcam
         #region Form events
 
         ImageViewer viewer;
-        Capture capture;
+        Capture capture;        
 
         private void Form1_Load(object sender, EventArgs e)
-        {            
-
-
+        {
             // Loading ports for NXT
             combox_port1.DataSource = SerialPort.GetPortNames();
-            combox_port2.DataSource = SerialPort.GetPortNames();
+            combox_port2.DataSource = SerialPort.GetPortNames();            
             combox_port1.Text = "COM15";
             combox_port2.Text = "COM5";
 
@@ -248,8 +246,7 @@ namespace _3Dwebcam
 
             // Camera
             viewer = new ImageViewer(); //create an image viewer
-            capture = new Capture(); //create a camera captue                        
-            //capture.FlipVertical = true;
+            capture = new Capture(); //create a camera captue                                      
 
             Application.Idle += new EventHandler(Application_Idle);            
         }
@@ -333,26 +330,28 @@ namespace _3Dwebcam
                 _nxt.Dispose();
                 _nxt = null;
             }
-            // //capture dispose
 
-            //if (capture != null)
-            //{
-            //    capture.Dispose();
-            //    capture = null;
-            //}
-
-           
         }
 
         private void chb_laser_CheckedChanged(object sender, EventArgs e)
         {
             if (Device != null)
             {
-                switch (Device.IsRunning)
-                {
-                    case true: { Device.Stop(); } break;
-                    case false: { Device.Start(); } break;
+                try
+                {                                    
+                    if (Device.IsRunning)
+                    {
+                        Device.Stop();
+                    }
+                    else
+                    {                       
+                        Device.Start();                       
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }                
             }
             else
             {
@@ -360,29 +359,37 @@ namespace _3Dwebcam
             }
         }
 
+        private void chb_webcam_flip_CheckedChanged(object sender, EventArgs e)
+        {
+            capture.FlipVertical = chb_webcam_flip.Checked;
+        }
+
         #endregion                
         //-------------------------------------------------------------------------
         #region Devices
-
-        // Get Devices List
+        
         private void btn_get_devices_Click(object sender, EventArgs e)
         {
             GetDevices();
         }
 
+        // Get Device List
         private void GetDevices()
         {
             listBox1.Items.Clear();
 
-            DeviceList = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            DeviceList = new FilterInfoCollection(FilterCategory.VideoInputDevice);            
 
             foreach (FilterInfo fi in DeviceList)
             {
                 listBox1.Items.Add(fi.Name);
 
-                if (fi.Name.Contains("Trust"))
-                {
+                if (fi.Name.ToLower().Contains("trust"))
+                {                    
                     Device = new VideoCaptureDevice(fi.MonikerString);
+                    //MessageBox.Show(Device.Source);
+                    
+                    //Device.Start();
                 }
             }
         }
@@ -579,34 +586,12 @@ namespace _3Dwebcam
         //-------------------------------------------------------------------------
         #region Rotate
 
-        string path = @"D:\Dropbox\polish\splines\v_images\";                
+        //string path = @"D:\Dropbox\polish\splines\v_images\";                
 
         // Rotate Tick
         private void timer1_Tick(object sender, EventArgs e)
-        {
-            // rotate
-            button6.PerformClick();
+        {            
 
-            // save contours
-            //for (int z = 0; z < distance.Length; z++)
-            //{
-            //    string imagelog = distance[z] + ", ";
-            //    swFromFile.Write(Convert.ToString(imagelog));
-            //}
-            //swFromFile.Write("\r\n");
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            timer1.Enabled = checkBox1.Checked;
-        }
-
-        private int fordul = 0;
-        double x = 360 / 100;
-        //double forgas = 0.11545;
-        double forgas;
-        private void button6_Click(object sender, EventArgs e)
-        {
             forgas = 0.11545 * x;
             if (chb_using_nxt.Checked)
             {
@@ -619,18 +604,27 @@ namespace _3Dwebcam
             StopWebcam();
             //tresholdImageBox.Image.Save(path + "v_image_" + fordul + ".jpg");
             ContourCoordinates2();
-            
+
             StartWebcam();
 
-
-            //if (fordul == 360)
             if (fordul == 100)
             {
                 checkBox1.Checked = false;
+                MessageBox.Show("3D modell kész");
             }
         }
 
-        #endregion                        
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            timer1.Enabled = checkBox1.Checked;            
+        }
+
+        private int fordul = 0;
+        double x = 360 / 100;
+        //double forgas = 0.11545;
+        double forgas;
+
+        #endregion                                
         //--------------------------------------------------------------------------
     }
 }
