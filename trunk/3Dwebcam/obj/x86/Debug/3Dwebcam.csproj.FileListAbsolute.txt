@@ -45,3 +45,4 @@ D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\_3Dwebcam.Form1.resources
 D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\_3Dwebcam.Properties.Resources.resources
 D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\GenerateResource.read.1.tlog
 D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\utils\svn\laser-scanner\3Dwebcam\obj\x86\Debug\_3Dwebcam.Form_Contours.resources

@@ -27,8 +27,9 @@ namespace _3Dwebcam
 {
     public partial class Form1 : Form
     {
-        static string logfile = DateTime.Now.ToShortDateString().Replace(@"/", @"-").Replace(@"\", @"-") + ".txt";
-        StreamWriter swFromFile = new StreamWriter(logfile);
+        //static string logfile = DateTime.Now.ToShortDateString().Replace(@"/", @"-").Replace(@"\", @"-") + ".txt";
+        static string logfile;
+        StreamWriter swFromFile;
 
         //--------------------------------------------------------------------------
 
@@ -85,7 +86,7 @@ namespace _3Dwebcam
         public void ContourCoordinates()
         {
 
-            textBox1.Text = "";
+            
 
             img = capture.QueryFrame().Convert<Bgr, Byte>();
             g_img = this.FilterImage(img);
@@ -99,7 +100,9 @@ namespace _3Dwebcam
                         
             using (MemStorage storage = new MemStorage()) //allocate storage for contour approximation
             {
-               
+
+
+
                 for (Contour<Point> contours = g_img.FindContours(
                     Emgu.CV.CvEnum.CHAIN_APPROX_METHOD.CV_CHAIN_APPROX_NONE,
                     Emgu.CV.CvEnum.RETR_TYPE.CV_RETR_CCOMP,
@@ -114,7 +117,7 @@ namespace _3Dwebcam
                     LineSegment2D[] edges = PointCollection.PolyLine(pts, false);
 
                     tempimage = new Image<Gray, byte>(r_img.Width, r_img.Height);
-
+                    
                     CvInvoke.cvDrawContours(r_img, contour, new MCvScalar(200), new MCvScalar(0, 200, 0), 5, -1, LINE_TYPE.CV_AA, new Point(0, 0));
 
                     p.Clear();
@@ -154,47 +157,50 @@ namespace _3Dwebcam
         bool vane;
         int kozep;
         int tavolsag;
+        Graphics g;
+        Pen pen = new Pen(Color.Red);
+        Color c;
         public void ContourCoordinates2()
         {
-            vane = false;
-            kozep = tresholdImageBox.Image.Bitmap.Width / 2;
-            tavolsag = 0;
+            imageBox2.Image = tresholdImageBox.Image;
 
-            for (int y = 0; y < tresholdImageBox.Image.Bitmap.Height; y++)
-			{
+            lock (imageBox2)
+            {
+
                 vane = false;
+                kozep = imageBox2.Image.Bitmap.Width / 2;
+                tavolsag = 0;
 
-                for (int x = 0; x < kozep; x++)
-			    {
-                    Color c = tresholdImageBox.Image.Bitmap.GetPixel(x, y);
-
-                    if (c.R > 100)
-                    {
-                        tavolsag = kozep - x;
-                        //swFromFile.Write(x.ToString() + ";" + y.ToString() + ";" + tavolsag.ToString());
-                        swFromFile.Write(tavolsag.ToString()+",");
-                        
-                        vane = true;
-                        break;
-                    }                                        
-			    }
-
-                
-
-                if (!vane)
+                for (int y = 0; y < imageBox2.Image.Bitmap.Height; y++)
                 {
-                    tavolsag = 0;
-                    //swFromFile.Write("-1;" + y.ToString() + ";" + tavolsag.ToString());
-                    swFromFile.Write("-1,");
-                    //swFromFile.Write("\r\n");
+                    vane = false;
+
+                    for (int x = 0; x < kozep; x++)
+                    {
+
+                        c = imageBox2.Image.Bitmap.GetPixel(x, y);
+
+                        if (c.R > 100)
+                        {
+                            tavolsag = kozep - x;
+                            swFromFile.Write(tavolsag.ToString() + ",");
+                            vane = true;
+                            break;
+                        }
+                    }
+
+                    if (!vane)
+                    {
+                        tavolsag = -1;
+                        swFromFile.Write("-1,");
+                    }
                 }
 
-                
-			}
-
-            swFromFile.Write("\r\n");
-            
+                swFromFile.Write("\r\n");
+            }
         }
+
+        
        
         public void StartWebcam()
         {
@@ -231,10 +237,13 @@ namespace _3Dwebcam
         #region Form events
 
         ImageViewer viewer;
-        Capture capture;        
-
+        Capture capture;
+        Form_Contours fc;
         private void Form1_Load(object sender, EventArgs e)
         {
+                        
+           
+
             // Loading ports for NXT
             combox_port1.DataSource = SerialPort.GetPortNames();
             combox_port2.DataSource = SerialPort.GetPortNames();            
@@ -248,10 +257,12 @@ namespace _3Dwebcam
             viewer = new ImageViewer(); //create an image viewer
             capture = new Capture(); //create a camera captue                                      
 
-            Application.Idle += new EventHandler(Application_Idle);            
+            //Application.Idle += new EventHandler(Application_Idle);            
         }
 
         // Capture WebCam
+        ThreadStart ts;
+        Thread t;
         void Application_Idle(object sender, EventArgs e)
         {
             viewer.Image = capture.QueryFrame(); //draw the image obtained from camera
@@ -262,6 +273,9 @@ namespace _3Dwebcam
             FilterImage(tresholdframe);
             this.tresholdImageBox.Image = tresholdframe;
 
+            
+            //t = new Thread(ts);
+            //t.Start();
             //ContourCoordinates();            
         }
         
@@ -295,9 +309,10 @@ namespace _3Dwebcam
             this.label1.Text = Convert.ToString(this.intensity);
         }
         
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        private void btn_reset_Click(object sender, EventArgs e)
         {
-            
+            fordul = 0;
+            tb_rotate.Text = "";
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
@@ -590,9 +605,10 @@ namespace _3Dwebcam
 
         // Rotate Tick
         private void timer1_Tick(object sender, EventArgs e)
-        {            
+        {
+            Cursor.Current = Cursors.WaitCursor;
 
-            forgas = 0.11545 * x;
+            forgas = 0.11545;
             if (chb_using_nxt.Checked)
             {
                 ik.DegreeToOutput(forgas, forgas, forgas, forgas);
@@ -601,21 +617,41 @@ namespace _3Dwebcam
             tb_rotate.Text = fordul.ToString();
 
 
-            StopWebcam();
+           
+            //imageBox2.Image = tresholdImageBox.Image;
             //tresholdImageBox.Image.Save(path + "v_image_" + fordul + ".jpg");
+            //Thread t = new Thread(ts);
+            //t.Start();
             ContourCoordinates2();
 
-            StartWebcam();
 
-            if (fordul == 100)
+            Cursor.Current = Cursors.Default;
+
+            if (fordul == 359)
             {
                 checkBox1.Checked = false;
                 MessageBox.Show("3D modell kész");
+                swFromFile.Close();
             }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
+            if (checkBox1.Checked)
+            {
+                pb_progress.Value = 0;
+                pb_progress.Maximum = 360;
+
+                logfile = @"model_" + String.Format("{0:s}", DateTime.Now) + ".txt";
+                logfile = logfile.Replace(':', '.');
+
+                swFromFile = new StreamWriter(Application.StartupPath + @"\" + logfile);
+            }
+            else
+            {
+                pb_progress.Value = 0;
+            }
+            
             timer1.Enabled = checkBox1.Checked;            
         }
 
@@ -625,6 +661,18 @@ namespace _3Dwebcam
         double forgas;
 
         #endregion                                
+
+        
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            viewer.Image = capture.QueryFrame(); //draw the image obtained from camera
+
+            webcamImageBox.Image = viewer.Image;
+
+            Image<Bgr, Byte> tresholdframe = (Emgu.CV.Image<Bgr, Byte>)webcamImageBox.Image.Clone();
+            FilterImage(tresholdframe);
+            this.tresholdImageBox.Image = tresholdframe;
+        }
         //--------------------------------------------------------------------------
     }
 }
